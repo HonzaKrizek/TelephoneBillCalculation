@@ -151,16 +151,17 @@ public class Calculator implements TelephoneBillCalculator{
 
     // nalezení nejčasteji volaného čísla
     private void promo(){
-        int max = duplicates.values().stream().max(Integer::compare).get();
-        long maxNumber = 0;
-        for (Long number: duplicates.keySet()){
-            if (duplicates.get(number) == max){
-                long helpNumber = number;
-                if (helpNumber > maxNumber){
-                    maxNumber = helpNumber;
-                }
-            }
-        }
+        int max = duplicates.
+                values().
+                stream().
+                max(Integer::compare).
+                get();
+        long maxNumber = duplicates.
+                entrySet().stream().
+                filter(a->a.getValue()==max).
+                mapToLong(Map.Entry::getKey).
+                max().
+                getAsLong();
 
         for ( Long number: numbers){
             if (Objects.equals(number, maxNumber) ){
